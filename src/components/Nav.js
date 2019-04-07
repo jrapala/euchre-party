@@ -37,7 +37,16 @@ const Nav = () => (
 		>
 			<NavItem text="where" />
 		</Link>
-		<NavItem text="RSVP" />
+		<Link
+			activeClass="active"
+			to="rsvp"
+			spy
+			smooth
+			offset={-70}
+			duration={500}
+		>
+			<NavItem text="RSVP" />
+		</Link>
 	</Stripe>
 )
 

@@ -8,6 +8,8 @@ const theme = {
 		purple: "#852bff",
 		paleGray: "#f5f6f8",
 		darkGray: "#b4b3be",
+		red: "red",
+		blue: "#007AFF",
 	},
 	fonts: {
 		regular: "'Open Sans', sans-serif",

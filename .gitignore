@@ -1,0 +1,22 @@
+.git/
+.vscode
+
+# Cache folders
+.cache
+
+# Dependency directories
+.DS_Store
+node_modules
+
+# NPM Files
+npm-debug.log
+package-lock.json
+
+# Ignore continually generated coverage reports
+coverage
+
+# Ignore builds
+dist/
+
+# Ignore bundles
+bundle.js

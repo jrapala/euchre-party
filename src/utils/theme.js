@@ -9,7 +9,9 @@ const theme = {
 		paleGray: "#f5f6f8",
 		darkGray: "#b4b3be",
 		red: "red",
+		lightBlue: "#3b99ff",
 		blue: "#007AFF",
+		darkBlue: "#005ec4",
 	},
 	fonts: {
 		regular: "'Open Sans', sans-serif",

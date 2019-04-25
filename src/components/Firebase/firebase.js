@@ -4,7 +4,7 @@
 // import * as firebase from 'firebase';
 
 // Firebase App is always required and must be first
-let firebase = require("firebase/app")
+const firebase = require("firebase/app")
 
 // Add additional services that you want to use
 require("firebase/auth")
@@ -43,4 +43,4 @@ firebase.initializeApp(config)
 const database = firebase.database()
 const googleAuthProvider = new firebase.auth.GoogleAuthProvider()
 
-export { firebase, googleAuthProvider, database as default }
+export { firebase, googleAuthProvider, database }

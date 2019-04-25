@@ -2,6 +2,8 @@ import React from "react"
 import PropTypes from "prop-types"
 import styled from "@emotion/styled"
 
+import AddToCalendar from "./AddToCalendar"
+
 const Container = styled.div`
 	display: flex;
 	flex-direction: row;
@@ -35,10 +37,6 @@ const Text = styled.p`
 	align-items: left;
 `
 
-const Add = styled.a`
-	font-size: 14px;
-`
-
 const Date = ({ id }) => (
 	<Container id={id}>
 		<TitleContainer>
@@ -47,13 +45,7 @@ const Date = ({ id }) => (
 		<TextContainer>
 			<Text>Saturday, May 11, 2019</Text>
 			<Text>5:30pm-10:30pm</Text>
-			<Add
-				href="http://www.google.com/calendar/event?action=TEMPLATE&dates=20190511T223000Z%2F20190512T033000Z&text=Paul%20%26%20Juliette's%20Euchre%20Party!&location=425%20W%20Surf%20St%20%23903%20Chicago%2C%20IL%2060657&details="
-				target="_blank"
-				rel="nofollow"
-			>
-				Add to Google calendar
-			</Add>
+			<AddToCalendar />
 		</TextContainer>
 	</Container>
 )

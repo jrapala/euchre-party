@@ -10,6 +10,10 @@ const Container = styled.div`
 	justify-content: space-evenly;
 	margin-top: 5%;
 	width: 100%;
+	@media (max-width: 768px) {
+		align-items: center;
+		flex-direction: column;
+	}
 `
 
 const TitleContainer = styled.div`
@@ -17,6 +21,12 @@ const TitleContainer = styled.div`
 	justify-content: flex-end;
 	padding-right: 15%;
 	width: 50%;
+	@media (max-width: 768px) {
+		align-items: center;
+		flex-direction: column;
+		padding: 0;
+		width: 100%;
+	}
 `
 const Title = styled.p`
 	font-size: 24px;
@@ -31,6 +41,13 @@ const TextContainer = styled.div`
 	justify-content: flex-start;
 	padding-right: 15%;
 	width: 50%;
+	@media (max-width: 768px) {
+		align-items: center;
+		flex-direction: column;
+		margin-top: 10px;
+		padding: 0;
+		width: 100%;
+	}
 `
 
 const Text = styled.p`

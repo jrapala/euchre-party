@@ -5,6 +5,7 @@
 	"main": "index.js",
 	"scripts": {
 		"dev": "parcel public/index.html",
+		"build": "parcel build ./src/App.js --no-source-maps",
 		"format": "prettier --write \"src/**/*.{js,jsx}\"",
 		"lint": "eslint \"**/*.{js,jsx}\""
 	},
@@ -19,9 +20,10 @@
 	},
 	"homepage": "https://github.com/jrapala/euchre-party#readme",
 	"devDependencies": {
-		"@babel/core": "^7.4.0",
+		"@babel/core": "^7.4.3",
 		"@babel/plugin-proposal-class-properties": "^7.4.0",
 		"@babel/preset-react": "^7.0.0",
+		"@emotion/babel-preset-css-prop": "^10.0.9",
 		"babel-eslint": "^10.0.1",
 		"eslint": "^5.16.0",
 		"eslint-config-airbnb": "^17.1.0",

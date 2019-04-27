@@ -8,6 +8,10 @@ const Container = styled.div`
 	justify-content: space-evenly;
 	margin-top: 5%;
 	width: 100%;
+	@media (max-width: 768px) {
+		align-items: center;
+		flex-direction: column;
+	}
 `
 
 const TitleContainer = styled.div`
@@ -15,6 +19,12 @@ const TitleContainer = styled.div`
 	justify-content: flex-end;
 	padding-right: 15%;
 	width: 50%;
+	@media (max-width: 768px) {
+		align-items: center;
+		flex-direction: column;
+		padding: 0;
+		width: 100%;
+	}
 `
 const Title = styled.p`
 	font-size: 24px;
@@ -29,6 +39,13 @@ const TextContainer = styled.div`
 	justify-content: flex-start;
 	padding-right: 15%;
 	width: 50%;
+	@media (max-width: 768px) {
+		align-items: center;
+		flex-direction: column;
+		margin-top: 10px;
+		padding: 0;
+		width: 100%;
+	}
 `
 
 const Text = styled.p`
@@ -45,11 +62,11 @@ const Location = ({ id }) => (
 		</TitleContainer>
 		<TextContainer>
 			<Text>Paul and Juliette&apos;s</Text>
-			<Address href="https://goo.gl/maps/6qTuDVg3T3y" target="_blank">
-				425 W Surf St #903
+			<Address href={process.env.GOOGLE_MAPS_LINK} target="_blank">
+				{process.env.ADDRESS_LINE_ONE}
 			</Address>
-			<Address href="https://goo.gl/maps/6qTuDVg3T3y" target="_blank">
-				Chicago, IL 60657
+			<Address href={process.env.GOOGLE_MAPS_LINK} target="_blank">
+				{process.env.ADDRESS_LINE_TWO}
 			</Address>
 		</TextContainer>
 	</Container>

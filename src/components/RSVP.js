@@ -1,5 +1,6 @@
 import React, { Fragment } from "react"
 import PropTypes from "prop-types"
+import { keyframes } from "@emotion/core"
 import styled from "@emotion/styled"
 import Rodal from "rodal"
 import "rodal/lib/rodal.css"
@@ -7,8 +8,15 @@ import GoogleButton from "react-google-button"
 import "react-widgets/dist/css/react-widgets.css"
 import { Combobox } from "react-widgets"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faCheck, faTimes, faQuestion } from "@fortawesome/free-solid-svg-icons"
-import { firebase, googleAuthProvider, database } from "./Firebase/firebase"
+import {
+	faCheck,
+	faTimes,
+	faQuestion,
+	faSpinner,
+} from "@fortawesome/free-solid-svg-icons"
+
+import * as CONST from "../libs/constants"
+import { firebase, googleAuthProvider, database } from "../utils/firebase"
 
 const ButtonGroup = styled.div`
 	align-items: center;
@@ -104,6 +112,21 @@ const SignIn = styled.h2`
 	margin-bottom: 10%;
 `
 
+const spin = keyframes`
+	0% {
+		-webkit-transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(360deg);
+	}
+`
+const SpinnerIcon = styled(FontAwesomeIcon)`
+	animation ${spin} 1s linear infinite;
+	color: ${props => props.theme.colors.blue};
+	font-size: 40px;
+	margin-bottom: 100px;
+`
+
 const StyledIcon = styled(FontAwesomeIcon)`
 	font-size: 18px;
 `
@@ -140,14 +163,6 @@ const Title = styled.p`
 	text-transform: uppercase;
 `
 
-const items = [
-	"Pinot Noir",
-	"Interesting Beer",
-	"Doritos",
-	"Tortilla Chips",
-	"Guacamole",
-]
-
 class RSVP extends React.Component {
 	static propTypes = {
 		id: PropTypes.string.isRequired,
@@ -157,6 +172,7 @@ class RSVP extends React.Component {
 		attendees: [],
 		displayName: "",
 		existingUser: false,
+		loading: false,
 		user: "",
 		visible: false,
 		rsvpSelection: "",
@@ -169,11 +185,11 @@ class RSVP extends React.Component {
 	}
 
 	getAttendees = () => {
+		this.setState({ loading: true })
 		database
 			.ref("attendees")
 			.once("value")
 			.then(snapshot => {
-				// console.log(snapshot)
 				const attendees = []
 				snapshot.forEach(childSnapshot => {
 					attendees.push({
@@ -182,6 +198,9 @@ class RSVP extends React.Component {
 					})
 				})
 				this.setState({ attendees })
+			})
+			.then(() => {
+				this.setState({ loading: false })
 			})
 	}
 
@@ -199,15 +218,11 @@ class RSVP extends React.Component {
 		} = this.state
 		this.hide()
 
-		let item = itemBringing
-		if (rsvpSelection === "no" || rsvpSelection === "maybe") {
-			item = ""
-		}
 		database.ref(`attendees/${uid}`).set({
 			email: user,
 			name: displayName,
 			going: rsvpSelection,
-			bringing: item,
+			bringing: itemBringing,
 		})
 		this.getAttendees()
 	}
@@ -250,6 +265,9 @@ class RSVP extends React.Component {
 
 	select(selection) {
 		this.setState({ rsvpSelection: selection })
+		if (selection === "no" || selection === "maybe") {
+			this.setState({ itemBringing: "" })
+		}
 	}
 
 	show() {
@@ -285,6 +303,7 @@ class RSVP extends React.Component {
 			displayName,
 			existingUser,
 			itemBringing,
+			loading,
 			rsvpSelection,
 			user,
 			visible,
@@ -292,6 +311,7 @@ class RSVP extends React.Component {
 
 		return (
 			<Container id={id}>
+				{loading ? <SpinnerIcon icon={faSpinner} /> : <Fragment />}
 				{attendees.length ? (
 					<Fragment>
 						<Title>Guests</Title>
@@ -381,9 +401,9 @@ class RSVP extends React.Component {
 											<Text>I am bringing:</Text>
 										</Question>
 										<Combobox
-											data={items.sort()}
+											data={CONST.items.sort()}
 											defaultValue={itemBringing}
-											placeholder="A tasty beverage.."
+											placeholder="Enter or choose an item"
 											onChange={this.handleComboBox}
 										/>
 									</Fragment>

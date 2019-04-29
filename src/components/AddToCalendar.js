@@ -26,13 +26,15 @@ const StyledButton = styled.button`
 	width: 210px;
 `
 
-const AddToCalendar = () => (
-	<StyledButton
-		onClick={() => window.open(process.env.GOOGLE_CALENDAR_LINK, "_blank")}
-	>
-		<StyledIcon icon={faCalendarPlus} />
-		<div>Add to Google Calendar</div>
-	</StyledButton>
-)
+const AddToCalendar = () => {
+	const link = process.env.GOOGLE_CALENDAR_LINK
+	console.log(link)
+	return (
+		<StyledButton onClick={() => window.open(link, "_blank")}>
+			<StyledIcon icon={faCalendarPlus} />
+			<div>Add to Google Calendar</div>
+		</StyledButton>
+	)
+}
 
 export default AddToCalendar

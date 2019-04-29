@@ -122,6 +122,13 @@ const spin = keyframes`
 		-webkit-transform: rotate(360deg);
 	}
 `
+
+const ModalSpinnerIcon = styled(FontAwesomeIcon)`
+	animation ${spin} 1s linear infinite;
+	color: ${props => props.theme.colors.blue};
+	font-size: 40px;
+`
+
 const SpinnerIcon = styled(FontAwesomeIcon)`
 	animation ${spin} 1s linear infinite;
 	color: ${props => props.theme.colors.blue};
@@ -179,6 +186,7 @@ class RSVP extends React.Component {
 		attendees: [],
 		displayName: "",
 		existingUser: false,
+		modalLoading: false,
 		loading: false,
 		user: "",
 		visible: false,
@@ -247,6 +255,7 @@ class RSVP extends React.Component {
 	}
 
 	login() {
+		this.setState({ modalLoading: true })
 		firebase
 			.auth()
 			.signInWithPopup(googleAuthProvider)
@@ -275,6 +284,7 @@ class RSVP extends React.Component {
 							})
 						}
 					})
+					.then(() => this.setState({ modalLoading: false }))
 			})
 	}
 
@@ -319,6 +329,7 @@ class RSVP extends React.Component {
 			existingUser,
 			itemBringing,
 			loading,
+			modalLoading,
 			rsvpSelection,
 			user,
 			visible,
@@ -358,6 +369,8 @@ class RSVP extends React.Component {
 									}}
 								/>
 							</React.Fragment>
+						) : modalLoading ? (
+							<ModalSpinnerIcon icon={faSpinner} />
 						) : (
 							<React.Fragment>
 								{existingUser ? (

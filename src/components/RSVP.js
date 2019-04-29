@@ -72,6 +72,7 @@ const Question = styled.div`
 `
 
 const RSVPButton = styled.button`
+	background-color: transparent;
 	border: 2px solid ${props => props.theme.colors.blue};
 	border-radius: 5px;
 	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
@@ -90,6 +91,7 @@ const RSVPButton = styled.button`
 `
 
 const RSVPButtonSmall = styled.button`
+	background-color: transparent;
 	border: 1px solid ${props => props.color};
 	color: ${props => props.color};
 	cursor: pointer;
@@ -168,6 +170,11 @@ class RSVP extends React.Component {
 		id: PropTypes.string.isRequired,
 	}
 
+	constructor(props) {
+		super(props)
+		this.submitButton = React.createRef()
+	}
+
 	state = {
 		attendees: [],
 		displayName: "",
@@ -206,6 +213,14 @@ class RSVP extends React.Component {
 
 	handleComboBox = value => {
 		this.setState({ itemBringing: value })
+	}
+
+	handleKeyDown = e => {
+		if (e.key === "Enter") {
+			e.preventDefault()
+			this.setState({ itemBringing: e.target.value })
+			this.submitButton.current.focus()
+		}
 	}
 
 	submit() {
@@ -405,6 +420,8 @@ class RSVP extends React.Component {
 											defaultValue={itemBringing}
 											placeholder="Enter or choose an item"
 											onChange={this.handleComboBox}
+											onKeyDown={this.handleKeyDown}
+											suggest
 										/>
 									</Fragment>
 								) : (
@@ -413,7 +430,10 @@ class RSVP extends React.Component {
 								{itemBringing.length ||
 								rsvpSelection === "no" ||
 								rsvpSelection === "maybe" ? (
-									<SubmitButton onClick={() => this.submit()}>
+									<SubmitButton
+										onClick={() => this.submit()}
+										ref={this.submitButton}
+									>
 										Submit
 									</SubmitButton>
 								) : (

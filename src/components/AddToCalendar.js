@@ -28,7 +28,6 @@ const StyledButton = styled.button`
 
 const AddToCalendar = () => {
 	const link = process.env.GOOGLE_CALENDAR_LINK
-	console.log(link)
 	return (
 		<StyledButton onClick={() => window.open(link, "_blank")}>
 			<StyledIcon icon={faCalendarPlus} />

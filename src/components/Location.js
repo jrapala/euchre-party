@@ -55,22 +55,25 @@ const Address = styled.a`
 	align-items: left;
 `
 
-const Location = ({ id }) => (
-	<Container id={id}>
-		<TitleContainer>
-			<Title>Where:</Title>
-		</TitleContainer>
-		<TextContainer>
-			<Text>Paul and Juliette&apos;s</Text>
-			<Address href={process.env.GOOGLE_MAPS_LINK} target="_blank">
-				{process.env.ADDRESS_LINE_ONE}
-			</Address>
-			<Address href={process.env.GOOGLE_MAPS_LINK} target="_blank">
-				{process.env.ADDRESS_LINE_TWO}
-			</Address>
-		</TextContainer>
-	</Container>
-)
+const Location = ({ id }) => {
+	const link = process.env.GOOGLE_MAPS_LINK
+	return (
+		<Container id={id}>
+			<TitleContainer>
+				<Title>Where:</Title>
+			</TitleContainer>
+			<TextContainer>
+				<Text>Paul and Juliette&apos;s</Text>
+				<Address href={link} target="_blank">
+					{process.env.ADDRESS_LINE_ONE}
+				</Address>
+				<Address href={link} target="_blank">
+					{process.env.ADDRESS_LINE_TWO}
+				</Address>
+			</TextContainer>
+		</Container>
+	)
+}
 
 Location.propTypes = {
 	id: PropTypes.string.isRequired,

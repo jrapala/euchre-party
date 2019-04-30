@@ -122,25 +122,6 @@ const StyledIcon = styled(FontAwesomeIcon)`
 	font-size: 18px;
 `
 
-const SubmitButton = styled.button`
-	border: 2px solid ${props => props.theme.colors.blue};
-	border-radius: 5px;
-	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
-	color: ${props => props.theme.colors.blue};
-	cursor: pointer;
-	font-size: 14px;
-	font-weight: ${props => props.theme.fontWeights.bold};
-	margin: 10px;
-	padding: 8px;
-	width: 100px;
-	transition: all 0.25s ease;
-	&:hover {
-		color: ${props => props.theme.colors.white};
-		background-color: ${props => props.theme.colors.blue};
-	}
-	margin-top: 20px;
-`
-
 const Text = styled.p`
 	margin-bottom: 10px;
 	margin-top: 10px;
@@ -337,6 +318,7 @@ class RSVP extends React.Component {
 					<Fragment />
 				)}
 				<ButtonTransparent
+					large
 					onClick={() => this.show()}
 					text={user ? "Modify" : "RSVP"}
 				/>
@@ -429,12 +411,12 @@ class RSVP extends React.Component {
 								{itemBringing.length ||
 								rsvpSelection === "no" ||
 								rsvpSelection === "maybe" ? (
-									<SubmitButton
+									<ButtonTransparent
+										margin="20px 10px"
 										onClick={() => this.submit()}
 										ref={this.submitButton}
-									>
-										Submit
-									</SubmitButton>
+										text="Submit"
+									/>
 								) : (
 									<Fragment />
 								)}

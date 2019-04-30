@@ -1,7 +1,6 @@
 .git/
 .vscode
 .env
-.netlify
 
 # Cache folders
 .cache

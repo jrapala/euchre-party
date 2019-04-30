@@ -1,6 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 import styled from "@emotion/styled"
+import { Link } from "react-scroll"
 
 const Item = styled.div`
 	display: flex;
@@ -15,13 +16,15 @@ const Text = styled.p`
 	color: ${props => props.theme.colors.white};
 `
 
-const NavItem = ({ text }) => (
-	<Item>
-		<Text>{text}</Text>
-	</Item>
+const NavItem = ({ to }) => (
+	<Link activeClass="active" to={to} spy smooth offset={-70} duration={500}>
+		<Item>
+			<Text>{to}</Text>
+		</Item>
+	</Link>
 )
 
 NavItem.propTypes = {
-	text: PropTypes.string.isRequired,
+	to: PropTypes.string.isRequired,
 }
 export default NavItem

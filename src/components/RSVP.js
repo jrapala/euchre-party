@@ -17,6 +17,7 @@ import {
 
 import * as CONST from "../libs/constants"
 import { firebase, googleAuthProvider, database } from "../utils/firebase"
+import ButtonTransparent from "./ButtonTransparent"
 
 const ButtonGroup = styled.div`
 	align-items: center;
@@ -69,25 +70,6 @@ const Modal = styled.div`
 const Question = styled.div`
 	width: 100%;
 	margin-left: 5px;
-`
-
-const RSVPButton = styled.button`
-	background-color: transparent;
-	border: 2px solid ${props => props.theme.colors.blue};
-	border-radius: 5px;
-	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
-	color: ${props => props.theme.colors.blue};
-	cursor: pointer;
-	font-size: 24px;
-	font-weight: ${props => props.theme.fontWeights.bold};
-	padding: 10px;
-	width: 200px;
-	transition: all 0.25s ease;
-	letter-spacing: 2px;
-	&:hover {
-		color: ${props => props.theme.colors.white};
-		background-color: ${props => props.theme.colors.blue};
-	}
 `
 
 const RSVPButtonSmall = styled.button`
@@ -217,6 +199,7 @@ class RSVP extends React.Component {
 			.then(() => {
 				this.setState({ loading: false })
 			})
+			.catch(err => console.log(err.message)) // eslint-disable-line no-console
 	}
 
 	handleComboBox = value => {
@@ -285,7 +268,9 @@ class RSVP extends React.Component {
 						}
 					})
 					.then(() => this.setState({ modalLoading: false }))
+					.catch(err => console.log(err.message)) // eslint-disable-line no-console
 			})
+			.catch(err => console.log(err.message)) // eslint-disable-line no-console
 	}
 
 	select(selection) {
@@ -351,9 +336,10 @@ class RSVP extends React.Component {
 				) : (
 					<Fragment />
 				)}
-				<RSVPButton large onClick={() => this.show()}>
-					{user ? "Modify" : "RSVP"}
-				</RSVPButton>
+				<ButtonTransparent
+					onClick={() => this.show()}
+					text={user ? "Modify" : "RSVP"}
+				/>
 				<Rodal
 					visible={visible}
 					onClose={() => this.hide()}

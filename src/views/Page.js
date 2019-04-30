@@ -2,8 +2,7 @@ import React from "react"
 import styled from "@emotion/styled"
 import Header from "../components/Header"
 import Nav from "../components/Nav"
-import Location from "../components/Location"
-import Date from "../components/Date"
+import InfoSection from "../components/InfoSection"
 import RSVP from "../components/RSVP"
 
 const Container = styled.div`
@@ -21,8 +20,8 @@ const Page = () => {
 		<Container>
 			<Header />
 			<Nav />
-			<Date id="when" />
-			<Location id="where" />
+			<InfoSection id="when" />
+			<InfoSection id="where" />
 			<RSVP id="rsvp" />
 		</Container>
 	)

@@ -1,8 +1,10 @@
 /* eslint-disable import/prefer-default-export */
 export const items = [
-	"Pinot Noir",
-	"Interesting Beer",
 	"Doritos",
-	"Tortilla Chips",
 	"Guacamole",
+	"Interesting Beer",
+	"Not Sure Yet!",
+	"Salsa",
+	"Tortilla Chips",
+	"Veggie Tray",
 ]

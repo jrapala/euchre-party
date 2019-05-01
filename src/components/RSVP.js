@@ -17,6 +17,7 @@ import {
 
 import * as CONST from "../libs/constants"
 import { firebase, googleAuthProvider, database } from "../utils/firebase"
+import ButtonTransparent from "./ButtonTransparent"
 
 const ButtonGroup = styled.div`
 	align-items: center;
@@ -71,25 +72,6 @@ const Question = styled.div`
 	margin-left: 5px;
 `
 
-const RSVPButton = styled.button`
-	background-color: transparent;
-	border: 2px solid ${props => props.theme.colors.blue};
-	border-radius: 5px;
-	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
-	color: ${props => props.theme.colors.blue};
-	cursor: pointer;
-	font-size: 24px;
-	font-weight: ${props => props.theme.fontWeights.bold};
-	padding: 10px;
-	width: 200px;
-	transition: all 0.25s ease;
-	letter-spacing: 2px;
-	&:hover {
-		color: ${props => props.theme.colors.white};
-		background-color: ${props => props.theme.colors.blue};
-	}
-`
-
 const RSVPButtonSmall = styled.button`
 	background-color: transparent;
 	border: 1px solid ${props => props.color};
@@ -138,25 +120,6 @@ const SpinnerIcon = styled(FontAwesomeIcon)`
 
 const StyledIcon = styled(FontAwesomeIcon)`
 	font-size: 18px;
-`
-
-const SubmitButton = styled.button`
-	border: 2px solid ${props => props.theme.colors.blue};
-	border-radius: 5px;
-	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
-	color: ${props => props.theme.colors.blue};
-	cursor: pointer;
-	font-size: 14px;
-	font-weight: ${props => props.theme.fontWeights.bold};
-	margin: 10px;
-	padding: 8px;
-	width: 100px;
-	transition: all 0.25s ease;
-	&:hover {
-		color: ${props => props.theme.colors.white};
-		background-color: ${props => props.theme.colors.blue};
-	}
-	margin-top: 20px;
 `
 
 const Text = styled.p`
@@ -217,6 +180,7 @@ class RSVP extends React.Component {
 			.then(() => {
 				this.setState({ loading: false })
 			})
+			.catch(err => console.log(err.message)) // eslint-disable-line no-console
 	}
 
 	handleComboBox = value => {
@@ -285,7 +249,9 @@ class RSVP extends React.Component {
 						}
 					})
 					.then(() => this.setState({ modalLoading: false }))
+					.catch(err => console.log(err.message)) // eslint-disable-line no-console
 			})
+			.catch(err => console.log(err.message)) // eslint-disable-line no-console
 	}
 
 	select(selection) {
@@ -351,9 +317,11 @@ class RSVP extends React.Component {
 				) : (
 					<Fragment />
 				)}
-				<RSVPButton large onClick={() => this.show()}>
-					{user ? "Modify" : "RSVP"}
-				</RSVPButton>
+				<ButtonTransparent
+					large
+					onClick={() => this.show()}
+					text={user ? "Modify" : "RSVP"}
+				/>
 				<Rodal
 					visible={visible}
 					onClose={() => this.hide()}
@@ -443,12 +411,12 @@ class RSVP extends React.Component {
 								{itemBringing.length ||
 								rsvpSelection === "no" ||
 								rsvpSelection === "maybe" ? (
-									<SubmitButton
+									<ButtonTransparent
+										margin="20px 10px"
 										onClick={() => this.submit()}
 										ref={this.submitButton}
-									>
-										Submit
-									</SubmitButton>
+										text="Submit"
+									/>
 								) : (
 									<Fragment />
 								)}

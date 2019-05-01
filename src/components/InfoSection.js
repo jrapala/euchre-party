@@ -4,6 +4,7 @@ import styled from "@emotion/styled"
 
 import Date from "./Date"
 import Location from "./Location"
+import Details from "./Details"
 
 const Container = styled.div`
 	display: flex;
@@ -30,7 +31,8 @@ const TextContainer = styled.div`
 		flex-direction: column;
 		margin-top: 10px;
 		padding: 0;
-		width: 100%;
+		text-align: center;
+		width: 80%;
 	}
 `
 
@@ -53,14 +55,27 @@ const TitleContainer = styled.div`
 	}
 `
 
-const InfoSection = ({ id }) => (
-	<Container id={id}>
-		<TitleContainer>
-			<Title>{id}:</Title>
-		</TitleContainer>
-		<TextContainer>{id === "when" ? <Date /> : <Location />}</TextContainer>
-	</Container>
-)
+const InfoSection = ({ id }) => {
+	const renderContent = () => {
+		let content
+		if (id === "when") {
+			content = <Date />
+		} else if (id === "where") {
+			content = <Location />
+		} else if (id === "details") {
+			content = <Details />
+		}
+		return content
+	}
+	return (
+		<Container id={id}>
+			<TitleContainer>
+				<Title>{id}:</Title>
+			</TitleContainer>
+			<TextContainer>{renderContent()}</TextContainer>
+		</Container>
+	)
+}
 
 InfoSection.propTypes = {
 	id: PropTypes.string.isRequired,

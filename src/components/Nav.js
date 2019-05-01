@@ -18,6 +18,7 @@ const Nav = () => (
 	<Stripe>
 		<NavItem to="when" />
 		<NavItem to="where" />
+		<NavItem to="details" />
 		<NavItem to="rsvp" />
 	</Stripe>
 )

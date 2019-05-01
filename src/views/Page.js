@@ -22,6 +22,7 @@ const Page = () => {
 			<Nav />
 			<InfoSection id="when" />
 			<InfoSection id="where" />
+			<InfoSection id="details" />
 			<RSVP id="rsvp" />
 		</Container>
 	)

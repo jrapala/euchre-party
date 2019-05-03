@@ -5,19 +5,13 @@ import styled from "@emotion/styled"
 import Rodal from "rodal"
 import "rodal/lib/rodal.css"
 import GoogleButton from "react-google-button"
-import "react-widgets/dist/css/react-widgets.css"
-import { Combobox } from "react-widgets"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import {
-	faCheck,
-	faTimes,
-	faQuestion,
-	faSpinner,
-} from "@fortawesome/free-solid-svg-icons"
+import { faSpinner } from "@fortawesome/free-solid-svg-icons"
 
-import * as CONST from "../libs/constants"
 import { firebase, googleAuthProvider, database } from "../utils/firebase"
 import ButtonTransparent from "./ButtonTransparent"
+import ButtonWithIcon from "./ButtonWithIcon"
+import ItemBringing from "./ItemBringing"
 
 const ButtonGroup = styled.div`
 	align-items: center;
@@ -72,26 +66,6 @@ const Question = styled.div`
 	margin-left: 5px;
 `
 
-const RSVPButtonSmall = styled.button`
-	background-color: transparent;
-	border: 1px solid ${props => props.color};
-	color: ${props => props.color};
-	cursor: pointer;
-	display: flex;
-	font-size: 14px;
-	font-weight: ${props => props.theme.fontWeights.regular};
-	justify-content: space-evenly;
-	margin: 5px;
-	outline: none;
-	padding: 2px;
-	width: 240px;
-	transition: all 0.25s ease;
-	&:hover {
-		border: 1px solid ${props => props.hoverColor};
-		color: ${props => props.hoverColor};
-	}
-`
-
 const SignIn = styled.h2`
 	margin-bottom: 10%;
 `
@@ -116,10 +90,6 @@ const SpinnerIcon = styled(FontAwesomeIcon)`
 	color: ${props => props.theme.colors.blue};
 	font-size: 40px;
 	margin-bottom: 100px;
-`
-
-const StyledIcon = styled(FontAwesomeIcon)`
-	font-size: 18px;
 `
 
 const Text = styled.p`
@@ -265,6 +235,25 @@ class RSVP extends React.Component {
 		this.setState({ visible: true })
 	}
 
+	renderGuestList = () => {
+		const { attendees } = this.state
+		let content
+		if (attendees.length) {
+			content = (
+				<Fragment>
+					<Title>Guests</Title>
+					<Grid>
+						<GridHeader>Name</GridHeader>
+						<GridHeader>Status</GridHeader>
+						<GridHeader>Bringing</GridHeader>
+						{this.renderRows()}
+					</Grid>
+				</Fragment>
+			)
+		}
+		return content
+	}
+
 	renderRows = () => {
 		const { attendees } = this.state
 		const content = []
@@ -304,7 +293,8 @@ class RSVP extends React.Component {
 		return (
 			<Container id={id}>
 				{loading ? <SpinnerIcon icon={faSpinner} /> : <Fragment />}
-				{attendees.length ? (
+				{this.renderGuestList()}
+				{/* {attendees.length ? (
 					<Fragment>
 						<Title>Guests</Title>
 						<Grid>
@@ -316,7 +306,7 @@ class RSVP extends React.Component {
 					</Fragment>
 				) : (
 					<Fragment />
-				)}
+				)} */}
 				<ButtonTransparent
 					large
 					onClick={() => this.show()}
@@ -328,7 +318,7 @@ class RSVP extends React.Component {
 					height={300}
 				>
 					<Modal>
-						{!user ? (
+						{user ? (
 							<React.Fragment>
 								<SignIn>Sign In to RSVP</SignIn>
 								<GoogleButton
@@ -353,58 +343,28 @@ class RSVP extends React.Component {
 									<Text>Are you in?</Text>
 								</Question>
 								<ButtonGroup>
-									<RSVPButtonSmall
-										hoverColor="#23aa23"
-										color={
-											rsvpSelection === "yes"
-												? "#23aa23"
-												: "#b4b3be"
-										}
+									<ButtonWithIcon
+										type="yes"
+										rsvpSelection={rsvpSelection}
 										onClick={() => this.select("yes")}
-									>
-										<StyledIcon icon={faCheck} />
-										<div>Yes</div>
-									</RSVPButtonSmall>
-									<RSVPButtonSmall
-										hoverColor="#d8151f"
-										color={
-											rsvpSelection === "no"
-												? "#d8151f"
-												: "#b4b3be"
-										}
+									/>
+									<ButtonWithIcon
+										type="no"
+										rsvpSelection={rsvpSelection}
 										onClick={() => this.select("no")}
-									>
-										<StyledIcon icon={faTimes} />
-										<div>No</div>
-									</RSVPButtonSmall>
-									<RSVPButtonSmall
-										hoverColor="#eded1a"
-										color={
-											rsvpSelection === "maybe"
-												? "#eded1a"
-												: "#b4b3be"
-										}
+									/>
+									<ButtonWithIcon
+										type="maybe"
+										rsvpSelection={rsvpSelection}
 										onClick={() => this.select("maybe")}
-									>
-										<StyledIcon icon={faQuestion} />
-										<div>Maybe</div>
-									</RSVPButtonSmall>
+									/>
 								</ButtonGroup>
-
 								{rsvpSelection === "yes" ? (
-									<Fragment>
-										<Question>
-											<Text>I am bringing:</Text>
-										</Question>
-										<Combobox
-											data={CONST.items.sort()}
-											defaultValue={itemBringing}
-											placeholder="Enter or choose an item"
-											onChange={this.handleComboBox}
-											onKeyDown={this.handleKeyDown}
-											suggest
-										/>
-									</Fragment>
+									<ItemBringing
+										itemBringing={itemBringing}
+										onChange={this.handleComboBox}
+										onKeyDown={this.handleKeyDown}
+									/>
 								) : (
 									<Fragment />
 								)}

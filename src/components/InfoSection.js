@@ -56,7 +56,7 @@ const TitleContainer = styled.div`
 `
 
 const InfoSection = ({ id }) => {
-	const renderContent = () => {
+	function renderContent() {
 		let content
 		if (id === "when") {
 			content = <Date />

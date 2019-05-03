@@ -22,7 +22,7 @@ const TextContainer = styled.div`
 	align-items: left;
 	display: flex;
 	flex-direction: column;
-	font-size: 24px;
+	font-size: ${props => (props.smallerFont ? "20px" : "24px")};
 	justify-content: flex-start;
 	padding-right: 15%;
 	width: 50%;
@@ -55,7 +55,7 @@ const TitleContainer = styled.div`
 	}
 `
 
-const InfoSection = ({ id }) => {
+const InfoSection = ({ id, smallerFont }) => {
 	const renderContent = () => {
 		let content
 		if (id === "when") {
@@ -72,13 +72,20 @@ const InfoSection = ({ id }) => {
 			<TitleContainer>
 				<Title>{id}:</Title>
 			</TitleContainer>
-			<TextContainer>{renderContent()}</TextContainer>
+			<TextContainer smallerFont={smallerFont}>
+				{renderContent()}
+			</TextContainer>
 		</Container>
 	)
 }
 
 InfoSection.propTypes = {
 	id: PropTypes.string.isRequired,
+	smallerFont: PropTypes.bool,
+}
+
+InfoSection.defaultProps = {
+	smallerFont: false,
 }
 
 export default InfoSection
